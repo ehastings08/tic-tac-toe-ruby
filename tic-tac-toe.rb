@@ -1,4 +1,9 @@
-# Game class
+#= Tic Tac Toe
+#
+#Creates a command line tic-tac-toe game for two human players using Ruby
+
+#== Game class
+#Can initialize a game, get player names & markers, and continue to take turns until a game is over
 class Game
 	def initialize()
 		start_game
@@ -38,6 +43,7 @@ class Game
 	end
 end
 
+#== Player class. Can create a player based on their name and marker symbol.
 class Player
 	attr_reader :name
 
@@ -47,6 +53,7 @@ class Player
 	end
 end
 
+#== Board class. Keeps track of the current board using a two-dimensional array and displays it to the command line in a human-readable way.
 class Board
 	def initialize
 		@board = Array.new(3,Array.new(3,"-"))
@@ -75,5 +82,7 @@ class Board
 
 	# TO COMPLETE
 end
+
+
 
 new_game = Game.new
