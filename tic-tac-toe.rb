@@ -1,50 +1,29 @@
-# Tic Tac Toe Project Plan
-
-## Game class
-
-# - Start
-# - Get player names
-# - Take turn
-#   * Includes prompting user for data
-# - End
-
-# ## Board class
-
-# - Draw new
-# - Display a formatted board to cmd line
-# - Update board with user data
-
-# ## Player class
-
-# - Create player with name
-# - Randomly assigned X or O (may need to be a class variable to share between?)
-
 # Game class
 class Game
-	xs_and_os = ['X','O']
-
 	def initialize()
+		start_game
 	end
 
 	def start_game
 		puts "Starting a new game!"
-		get_player_names
+		get_player_names_and_markers
 	end
 
-	def get_player_names
+	def get_player_names_and_markers
+		xs_and_os = ['X','O']
+
 		puts "Player 1, please enter your name:"
 		@player_1_name = gets.chomp
 		x_or_o_index_1 = rand(0..1)
-
-		# Create player here
+		puts "Thanks #{@player_1_name}, you will be #{xs_and_os[x_or_o_index_1]}"
 
 		puts "Player 2, please enter your name:"
 		@player_2_name = gets.chomp
 		x_or_o_index_2 = x_or_o_index_1 == 0 ? 1 : 0
+		puts "Thanks #{@player_2_name}, you will be #{xs_and_os[x_or_o_index_2]}"
 
-		# Create player here
-		player_names = [@player_1_name, @player_2_name]
-		player_names
+		# Take turn
+		# TO COMPLETE
 	end
 
 	def take_turn
@@ -64,3 +43,13 @@ class Player
 		@x_or_o = x_or_o
 	end
 end
+
+class Board
+	def initialize
+		# TO COMPLETE
+	end
+
+	# TO COMPLETE
+end
+
+new_game = Game.new
