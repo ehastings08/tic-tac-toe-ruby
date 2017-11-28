@@ -22,6 +22,9 @@ class Game
 		x_or_o_index_2 = x_or_o_index_1 == 0 ? 1 : 0
 		puts "Thanks #{@player_2_name}, you will be #{xs_and_os[x_or_o_index_2]}"
 
+		# Create board
+		@board = Board.new
+		@board.display_board
 		# Take turn
 		# TO COMPLETE
 	end
@@ -46,6 +49,27 @@ end
 
 class Board
 	def initialize
+		@board = Array.new(3,Array.new(3,"-"))
+	end
+
+	def board
+		@board
+	end
+
+	def display_board
+		print "+++++++++++++++++\n"
+		for i in 0...@board.length
+			@board[i].each do |marker|
+				print "#{marker}\t"
+			end
+			if i != @board.length-1
+				print "\n"
+			end
+		end
+		print "\n+++++++++++++++++\n"
+	end
+
+	def update_board
 		# TO COMPLETE
 	end
 
