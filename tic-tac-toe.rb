@@ -1,4 +1,4 @@
-# Next step: Factor out board creation & turn taking into a new method in the Game class
+# Next step (in progress): Factor out turn taking into new methods in the Game class
 
 #= Tic Tac Toe
 #
@@ -7,17 +7,26 @@
 #== Game class
 #Can initialize a game, get player names & markers, and continue to take turns until a game is over
 class Game
+	attr_accessor :in_progress, :turn
+
 	def initialize()
 		@in_progress = true
+		@turn = 1
 		start_game
 	end
 
 	def start_game
 		puts "Starting a new game!"
-		get_player_names_and_markers
+		create_board
+		get_player_info
+		run_game
 	end
 
-	def get_player_names_and_markers
+	def create_board
+		@board = Board.new
+	end
+
+	def get_player_info
 		xs_and_os = ['X','O']
 
 		puts "Player 1, please enter your name:"
@@ -31,21 +40,30 @@ class Game
 		x_or_o_index_2 = x_or_o_index_1 == 0 ? 1 : 0
 		@player_2 = Player.new(name_2, xs_and_os[x_or_o_index_2])
 		puts "Thanks #{@player_2.name}, you will be #{@player_2.x_or_o}s"
-
-		# Create board
-		@board = Board.new
-		# Take turns until game is over
-		take_turn(@board, 1, @player_1)
-		# TO COMPLETE
 	end
 
-	def take_turn(board, turn, player)
-		puts "Starting turn number #{turn}."
+	def run_game
+		until @in_progress == false
+			# Take turns until game is over
+			if (turn % 2 == 1)
+				take_turn(@player_1)
+			else
+				take_turn(@player_2)
+			end
+		end
+	end
+
+	def take_turn(player)
+		if !@board.board_hash.values.include? "-"
+			@in_progress = false
+			end_game
+		end
+
+		puts "Starting turn number #{@turn}."
 		puts "#{player.name}, please enter the square you wish to play."
 		puts "Squares are numbered 1-9 from top left to bottom right."
 		@board.display_board
 
-		# ADD BELOW - handling for when user puts in a taken position (if update_board returns false, repeat loop)
 		print "Choice: >> "
 		position = gets.chomp.to_i
 		until ((1..9).to_a.include? position)
@@ -63,10 +81,21 @@ class Game
 		end
 
 		puts "Turn complete!"
+		@turn += 1
 	end
 
 	def end_game
-		# TO COMPLETE
+		puts "Game over!"
+
+		# Hah oh this isn't how tic tac toe works is it
+		count_xs = @board.board_hash.values.select{|item| item == 'X'}.length
+		count_os = @board.board_hash.values.select{|item| item == 'O'}.length
+		winner_marker = count_xs > count_os ? "X" : "O"
+		winner = @player_1.x_or_o == winner_marker ? @player_1 : @player_2
+
+		puts "The winner is: #{winner.name}"
+		puts "Thanks for playing!"
+		exit
 	end
 end
 
@@ -77,13 +106,16 @@ class Player
 	def initialize(name, x_or_o)
 		@name = name
 		@x_or_o = x_or_o
+		@mapping = {@x_or_o => @name}
 	end
 end
 
 #== Board class. Keeps track of the current board using a two-dimensional array and displays it to the command line in a human-readable way.
 class Board
+	attr_accessor :board_hash
+
 	def initialize
-		@board = {
+		@board_hash = {
 			1 => "-",
 			2 => "-",
 			3 => "-",
@@ -97,12 +129,12 @@ class Board
 	end
 
 	def board
-		@board
+		@board_hash
 	end
 
 	def display_board
 		print "+++++++++++++++++\n"
-		@board.each_pair do |key, value|
+		@board_hash.each_pair do |key, value|
 			print "#{value}\t"
 			print "\n" if (key % 3 == 0 && key != 9)
 		end
@@ -112,12 +144,12 @@ class Board
 	# Update board accepts the marker's position and either returns an error message or updates the board with the selection
 	def update_board(position, player)
 		# Check to see if that position is taken
-		if (@board[position] == "X" || @board[position] == "O")
+		if (@board_hash[position] == "X" || @board_hash[position] == "O")
 			puts "That position is already taken! Please try again."
 			return false
 		else
 			# update the board
-			@board[position] = player.x_or_o
+			@board_hash[position] = player.x_or_o
 			puts "Nice! Updated the board to add a #{player.x_or_o} to position #{position}"
 			display_board
 			return true
