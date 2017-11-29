@@ -74,6 +74,17 @@ end
 class Board
 	def initialize
 		@board = Array.new(3,Array.new(3,"-"))
+		@board_position_map = {
+			1 => @board[0][0],
+			2 => @board[0][1],
+			3 => @board[0][2],
+			4 => @board[1][0],
+			5 => @board[1][1],
+			6 => @board[1][2],
+			7 => @board[2][0],
+			8 => @board[2][1],
+			9 => @board[2][2]
+		}
 	end
 
 	def board
@@ -95,8 +106,15 @@ class Board
 
 	# Update board accepts the marker's position
 	def update_board(position, player)
+		# DELETE
 		puts "Running update_board on #{position}"
+		puts "@board_position_map is #{@board_position}"
+		puts "Current board is #{board}"
+		puts "The board position for your user position is #{@board_position_map[position]}"
 		# TO COMPLETE
+
+		# Check to see if that position is taken
+		
 
 
 	end
