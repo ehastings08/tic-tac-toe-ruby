@@ -1,4 +1,4 @@
-# Next step: Create handling for when update board method selection is already taken
+# Next step: Factor out board creation & turn taking into a new method in the Game class
 
 #= Tic Tac Toe
 #
