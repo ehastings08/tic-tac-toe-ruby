@@ -1,3 +1,5 @@
+# Next step: Create handling for when update board method selection is already taken
+
 #= Tic Tac Toe
 #
 #Creates a command line tic-tac-toe game for two human players using Ruby
@@ -52,8 +54,15 @@ class Game
 			position = gets.chomp.to_i
 		end
 
-		# Update board based on position selection
-		@board.update_board(position, player)
+		attempt = @board.update_board(position, player)
+		until attempt == true
+			puts "Please enter an integer between 1-9"
+			print "Choice: >> "
+			position = gets.chomp.to_i
+			attempt = @board.update_board(position, player)
+		end
+
+		puts "Turn complete!"
 	end
 
 	def end_game
