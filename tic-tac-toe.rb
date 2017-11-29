@@ -29,13 +29,15 @@ class Game
 
 		# Create board
 		@board = Board.new
-		@board.display_board
 		# Take turn
+		take_turn(1)
 		# TO COMPLETE
 	end
 
-	def take_turn
+	def take_turn(turn)
 		# TO COMPLETE
+		puts "Starting turn number #{turn}"
+		@board.display_board
 	end
 
 	def end_game
