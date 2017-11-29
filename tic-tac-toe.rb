@@ -19,23 +19,25 @@ class Game
 		xs_and_os = ['X','O']
 
 		puts "Player 1, please enter your name:"
-		@player_1_name = gets.chomp
+		name_1 = gets.chomp
 		x_or_o_index_1 = rand(0..1)
-		puts "Thanks #{@player_1_name}, you will be #{xs_and_os[x_or_o_index_1]}"
+		@player_1 = Player.new(name_1, xs_and_os[x_or_o_index_1])
+		puts "Thanks #{@player_1.name}, you will be #{@player_1.x_or_o}s"
 
 		puts "Player 2, please enter your name:"
-		@player_2_name = gets.chomp
+		name_2 = gets.chomp
 		x_or_o_index_2 = x_or_o_index_1 == 0 ? 1 : 0
-		puts "Thanks #{@player_2_name}, you will be #{xs_and_os[x_or_o_index_2]}"
+		@player_2 = Player.new(name_2, xs_and_os[x_or_o_index_2])
+		puts "Thanks #{@player_2.name}, you will be #{@player_2.x_or_o}s"
 
 		# Create board
 		@board = Board.new
 		# Take turn
-		take_turn(@board, 1, @player_1_name)
+		take_turn(@board, 1, @player_1_name, xs_and_os[x_or_o_index_1])
 		# TO COMPLETE
 	end
 
-	def take_turn(board, turn, player_name)
+	def take_turn(board, turn, player_name, marker)
 		puts "Starting turn number #{turn}."
 		puts "#{player_name}, please enter the square you wish to play."
 		puts "Squares are numbered 1-9 from top left to bottom right."
@@ -60,7 +62,7 @@ end
 
 #== Player class. Can create a player based on their name and marker symbol.
 class Player
-	attr_reader :name
+	attr_reader :name, :x_or_o
 
 	def initialize(name, x_or_o)
 		@name = name
