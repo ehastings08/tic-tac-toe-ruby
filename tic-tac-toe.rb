@@ -32,14 +32,14 @@ class Game
 
 		# Create board
 		@board = Board.new
-		# Take turn
-		take_turn(@board, 1, @player_1_name, xs_and_os[x_or_o_index_1])
+		# Take turns until game is over
+		take_turn(@board, 1, @player_1)
 		# TO COMPLETE
 	end
 
-	def take_turn(board, turn, player_name, marker)
+	def take_turn(board, turn, player)
 		puts "Starting turn number #{turn}."
-		puts "#{player_name}, please enter the square you wish to play."
+		puts "#{player.name}, please enter the square you wish to play."
 		puts "Squares are numbered 1-9 from top left to bottom right."
 		@board.display_board
 		print "Choice: >> "
@@ -51,7 +51,7 @@ class Game
 		end
 
 		# Update board based on position selection
-		@board.update_board(position)
+		@board.update_board(position, player)
 		# TO COMPLETE
 	end
 
@@ -93,9 +93,11 @@ class Board
 		print "\n+++++++++++++++++\n"
 	end
 
-	def update_board(position)
+	# Update board accepts the marker's position
+	def update_board(position, player)
 		puts "Running update_board on #{position}"
 		# TO COMPLETE
+
 
 	end
 
