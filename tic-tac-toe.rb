@@ -42,6 +42,8 @@ class Game
 		puts "#{player.name}, please enter the square you wish to play."
 		puts "Squares are numbered 1-9 from top left to bottom right."
 		@board.display_board
+
+		# ADD BELOW - handling for when user puts in a taken position (if update_board returns false, repeat loop)
 		print "Choice: >> "
 		position = gets.chomp.to_i
 		until ((1..9).to_a.include? position)
@@ -52,7 +54,6 @@ class Game
 
 		# Update board based on position selection
 		@board.update_board(position, player)
-		# TO COMPLETE
 	end
 
 	def end_game
@@ -73,17 +74,16 @@ end
 #== Board class. Keeps track of the current board using a two-dimensional array and displays it to the command line in a human-readable way.
 class Board
 	def initialize
-		@board = Array.new(3,Array.new(3,"-"))
-		@board_position_map = {
-			1 => @board[0][0],
-			2 => @board[0][1],
-			3 => @board[0][2],
-			4 => @board[1][0],
-			5 => @board[1][1],
-			6 => @board[1][2],
-			7 => @board[2][0],
-			8 => @board[2][1],
-			9 => @board[2][2]
+		@board = {
+			1 => "-",
+			2 => "-",
+			3 => "-",
+			4 => "-",
+			5 => "-",
+			6 => "-",
+			7 => "-",
+			8 => "-",
+			9 => "-"
 		}
 	end
 
@@ -93,30 +93,32 @@ class Board
 
 	def display_board
 		print "+++++++++++++++++\n"
-		for i in 0...@board.length
-			@board[i].each do |marker|
-				print "#{marker}\t"
-			end
-			if i != @board.length-1
-				print "\n"
-			end
+		@board.each_pair do |key, value|
+			print "#{value}\t"
+			print "\n" if (key % 3 == 0 && key != 9)
 		end
 		print "\n+++++++++++++++++\n"
 	end
 
-	# Update board accepts the marker's position
+	# Update board accepts the marker's position and either returns an error message or updates the board with the selection
 	def update_board(position, player)
 		# DELETE
+		puts "Player is #{player}"
 		puts "Running update_board on #{position}"
-		puts "@board_position_map is #{@board_position}"
-		puts "Current board is #{board}"
-		puts "The board position for your user position is #{@board_position_map[position]}"
+
 		# TO COMPLETE
 
 		# Check to see if that position is taken
-		
-
-
+		if (@board[position] == "X" || @board[position] == "O")
+			puts "That position is already taken! Please try again."
+			return false
+		else
+			# update the board
+			@board[position] = player.x_or_o
+			puts "Nice! Updated the board to add a #{player.x_or_o} to position #{position}"
+			display_board
+			return true
+		end
 	end
 
 	# TO COMPLETE
