@@ -102,12 +102,6 @@ class Board
 
 	# Update board accepts the marker's position and either returns an error message or updates the board with the selection
 	def update_board(position, player)
-		# DELETE
-		puts "Player is #{player}"
-		puts "Running update_board on #{position}"
-
-		# TO COMPLETE
-
 		# Check to see if that position is taken
 		if (@board[position] == "X" || @board[position] == "O")
 			puts "That position is already taken! Please try again."
@@ -120,8 +114,6 @@ class Board
 			return true
 		end
 	end
-
-	# TO COMPLETE
 end
 
 
