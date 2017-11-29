@@ -6,6 +6,7 @@
 #Can initialize a game, get player names & markers, and continue to take turns until a game is over
 class Game
 	def initialize()
+		@in_progress = true
 		start_game
 	end
 
@@ -30,14 +31,26 @@ class Game
 		# Create board
 		@board = Board.new
 		# Take turn
-		take_turn(1)
+		take_turn(@board, 1, @player_1_name)
 		# TO COMPLETE
 	end
 
-	def take_turn(turn)
-		# TO COMPLETE
-		puts "Starting turn number #{turn}"
+	def take_turn(board, turn, player_name)
+		puts "Starting turn number #{turn}."
+		puts "#{player_name}, please enter the square you wish to play."
+		puts "Squares are numbered 1-9 from top left to bottom right."
 		@board.display_board
+		print "Choice: >> "
+		position = gets.chomp.to_i
+		until ((1..9).to_a.include? position)
+			puts "Please enter an integer between 1-9"
+			print "Choice: >> "
+			position = gets.chomp.to_i
+		end
+
+		# Update board based on position selection
+		@board.update_board(position)
+		# TO COMPLETE
 	end
 
 	def end_game
@@ -78,8 +91,10 @@ class Board
 		print "\n+++++++++++++++++\n"
 	end
 
-	def update_board
+	def update_board(position)
+		puts "Running update_board on #{position}"
 		# TO COMPLETE
+
 	end
 
 	# TO COMPLETE
