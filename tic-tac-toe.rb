@@ -1,4 +1,4 @@
-# Next step (in progress): Factor out turn taking into new methods in the Game class
+# Next step: Define player_won? method to identify whether someone has won with consecutive spaces.
 
 #= Tic Tac Toe
 #
@@ -82,6 +82,10 @@ class Game
 
 		puts "Turn complete!"
 		@turn += 1
+	end
+
+	def player_won?
+		# TO COMPLETE
 	end
 
 	def end_game
