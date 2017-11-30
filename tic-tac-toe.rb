@@ -82,22 +82,29 @@ class Game
 
 		puts "Turn complete!"
 		@turn += 1
+
+		if player_won?
+			end_game(player)
+		end
 	end
 
+	# Checks the board to see if there are three of a kind in any of the winning slots
 	def player_won?
-		# TO COMPLETE
+		# This logic is really ugly. Is there a better way to do this? Checking the slots around a player's chosen position, perhaps?
+		if compare_three_board_slots(1,2,3) || compare_three_board_slots(4,5,6) || compare_three_board_slots(7,8,9) || compare_three_board_slots(1,4,7) || compare_three_board_slots(2,5,8) || compare_three_board_slots(3,6,9) || compare_three_board_slots(1,5,9) || compare_three_board_slots(7,5,3)
+			true
+		else 
+			false
+		end
 	end
 
-	def end_game
+	def compare_three_board_slots(slot_1,slot_2,slot_3)
+		return ((@board.board_hash[slot_1] == @board.board_hash[slot_2]) && (@board.board_hash[slot_2] == @board.board_hash[slot_3])) && (@board.board_hash[slot_1] != "-" && @board.board_hash[slot_2] != "-" && @board.board_hash[slot_3] != "-")
+	end
+
+	def end_game(player)
 		puts "Game over!"
-
-		# Hah oh this isn't how tic tac toe works is it
-		count_xs = @board.board_hash.values.select{|item| item == 'X'}.length
-		count_os = @board.board_hash.values.select{|item| item == 'O'}.length
-		winner_marker = count_xs > count_os ? "X" : "O"
-		winner = @player_1.x_or_o == winner_marker ? @player_1 : @player_2
-
-		puts "The winner is: #{winner.name}"
+		puts "The winner is: #{player.name}"
 		puts "Thanks for playing!"
 		exit
 	end
