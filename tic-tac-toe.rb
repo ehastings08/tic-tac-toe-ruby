@@ -1,5 +1,3 @@
-# Next step: Define player_won? method to identify whether someone has won with consecutive spaces.
-
 #= Tic Tac Toe
 #
 #Creates a command line tic-tac-toe game for two human players using Ruby
