@@ -5,8 +5,6 @@
 #== Game class
 #Can initialize a game, get player names & markers, and continue to take turns until a game is over
 class Game
-	attr_accessor :in_progress, :turn
-
 	def initialize()
 		@in_progress = true
 		@turn = 1
@@ -43,7 +41,7 @@ class Game
 	def run_game
 		until @in_progress == false
 			# Take turns until game is over
-			if (turn % 2 == 1)
+			if (@turn % 2 == 1)
 				take_turn(@player_1)
 			else
 				take_turn(@player_2)
