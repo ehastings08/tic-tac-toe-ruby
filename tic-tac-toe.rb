@@ -50,9 +50,10 @@ class Game
 	end
 
 	def take_turn(player)
+		# Check if game is over and no one has won
 		if !@board.board_hash.values.include? "-"
 			@in_progress = false
-			end_game
+			end_game(nil)
 		end
 
 		puts "Starting turn number #{@turn}."
@@ -87,11 +88,7 @@ class Game
 	# Checks the board to see if there are three of a kind in any of the winning slots
 	def player_won?
 		# This logic is really ugly. Is there a better way to do this? Checking the slots around a player's chosen position, perhaps?
-		if compare_three_board_slots(1,2,3) || compare_three_board_slots(4,5,6) || compare_three_board_slots(7,8,9) || compare_three_board_slots(1,4,7) || compare_three_board_slots(2,5,8) || compare_three_board_slots(3,6,9) || compare_three_board_slots(1,5,9) || compare_three_board_slots(7,5,3)
-			true
-		else 
-			false
-		end
+		(compare_three_board_slots(1,2,3) || compare_three_board_slots(4,5,6) || compare_three_board_slots(7,8,9) || compare_three_board_slots(1,4,7) || compare_three_board_slots(2,5,8) || compare_three_board_slots(3,6,9) || compare_three_board_slots(1,5,9) || compare_three_board_slots(7,5,3)) ? true : false
 	end
 
 	def compare_three_board_slots(slot_1,slot_2,slot_3)
@@ -100,7 +97,11 @@ class Game
 
 	def end_game(player)
 		puts "Game over!"
-		puts "The winner is: #{player.name}"
+		if player == nil
+			puts "No one has won :("
+		else
+			puts "The winner is: #{player.name}"
+		end
 		puts "Thanks for playing!"
 		exit
 	end
@@ -117,7 +118,7 @@ class Player
 	end
 end
 
-#== Board class. Keeps track of the current board using a two-dimensional array and displays it to the command line in a human-readable way.
+#== Board class. Keeps track of the current board using a position hash and displays it to the command line in a human-readable way.
 class Board
 	attr_accessor :board_hash
 
@@ -163,7 +164,6 @@ class Board
 		end
 	end
 end
-
 
 
 new_game = Game.new
